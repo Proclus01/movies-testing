@@ -7,6 +7,9 @@ it('Shows an autocomplete', () => {
                 { Title: 'Dune 2' },
                 { Title: 'Dune 2.3' }
             ];
+        },
+        renderOption(movie) {
+            return movie.Title;
         }
     });
 });
