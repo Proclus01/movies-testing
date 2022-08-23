@@ -19,17 +19,25 @@ beforeEach(() => {
     });
 });
 
+// Test: Check if dropdown is-active
 it('Dropdown starts closed', () => {
-
-
-    // Check if dropdown is-active
     const dropdown = document.querySelector('.dropdown');
 
     // Ensure that dropdown is-active is NOT added to the dropdown class
     expect(dropdown.className).not.to.include('is-active');
 });
 
+// Test: Trigger event by setting a value
 it('After searching, dropdown opens up', () => {
-    // type something in
-    // check dropdown
+    const dropdown = document.querySelector('.dropdown');
+
+    // type something in (set value)
+    const input = document.querySelector('input');
+    input.value = 'dune';
+
+    // trigger event
+    input.dispatchEvent(new Event('input'));
+
+    // check if dropdown is activated
+    expect(dropdown.className).to.include('is-active');
 });
