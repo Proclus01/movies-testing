@@ -1,3 +1,27 @@
+// Helper function to ensure that test expect statement triggers after debounce
+const waitFor = (selector) => {
+    return new Promise( (resolve, reject) => {
+        // Set an interval so that if input is not activated after set amount,
+        // then promise will be rejected
+        const interval = setInterval(() => {
+            if (document.querySelector(selector)) {
+                // Clear interval and timeout before resolving
+                clearInterval(interval);
+                clearTimeout(timeout);
+
+                resolve();
+            }
+        }, 30);
+
+        const timeout = setTimeout(() => {
+            // Clear interval before rejecting
+            clearInterval(interval);
+
+            reject();
+        }, 2000);
+    });
+};
+
 // Hook to set up testing environment for every following it statement
 beforeEach(() => {
     // clear target div
@@ -28,16 +52,19 @@ it('Dropdown starts closed', () => {
 });
 
 // Test: Trigger event by setting a value
-it('After searching, dropdown opens up', () => {
-    const dropdown = document.querySelector('.dropdown');
+it('After searching, dropdown opens up', 
+    async () => {
+        const dropdown = document.querySelector('.dropdown');
 
-    // type something in (set value)
-    const input = document.querySelector('input');
-    input.value = 'dune';
+        // type something in (set value)
+        const input = document.querySelector('input');
+        input.value = 'dune';
 
-    // trigger event
-    input.dispatchEvent(new Event('input'));
+        // trigger event
+        input.dispatchEvent(new Event('input'));
 
-    // check if dropdown is activated
-    expect(dropdown.className).to.include('is-active');
+        await waitFor('.dropdown-item');
+
+        // check if dropdown is activated
+        expect(dropdown.className).to.include('is-active');
 });
