@@ -68,3 +68,25 @@ it('After searching, dropdown opens up',
         // check if dropdown is activated
         expect(dropdown.className).to.include('is-active');
 });
+
+// Test: Ensure that dropdown items are added into the DOM
+it('After searching, displays some results', 
+    async () => {
+
+        const dropdown = document.querySelector('.dropdown');
+
+        // type something in (set value)
+        const input = document.querySelector('input');
+        input.value = 'dune';
+
+        // trigger event
+        input.dispatchEvent(new Event('input'));
+
+        await waitFor('.dropdown-item');
+
+        const items = document.querySelectorAll('.dropdown-item');
+
+        // Since we are faking 3 different elements
+        expect(items.length).to.equal(3);
+
+});
