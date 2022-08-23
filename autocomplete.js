@@ -1,9 +1,9 @@
 const createAutoComplete = ({
-  root,
-  renderOption,
-  onOptionSelect,
-  inputValue,
-  fetchData
+  root, // some HTML element inside of our DOM that we want to show autocomplete im
+  renderOption, // a function for rendering each individual autocomplete item
+  onOptionSelect, // a function to call every time we click on one of the results
+  inputValue, // backfills/updates input whenever we click on a result
+  fetchData // takes a user's text input and runs a search of the API
 }) => {
   root.innerHTML = `
     <label><b>Search</b></label>
